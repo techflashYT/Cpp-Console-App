@@ -12,8 +12,6 @@ int main(int argc, char **argv) {
             printf_s("%sArgument %i: %s\r\n", dbgPrefix, i, argv[i]);
         }
     }
-    else {
-        
-    }
+    printf_s("Welcome to the program!\r\n");
     return 0;
 }

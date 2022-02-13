@@ -7,7 +7,9 @@ void parseArgs(int argc, char** argv, bool* debugMode) {
             *debugMode = true;
         }
         else {
-
+            printf_s("Invalid argument!\r\n");
+            // showUsage();
+            std::exit(1);
         }
     }
 }
