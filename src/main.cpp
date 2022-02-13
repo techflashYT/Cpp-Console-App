@@ -1,5 +1,5 @@
-#include "inc/main.h"
-#include "inc/defines.h"
+#include "inc/main.hpp"
+#include "inc/defines.hpp"
 
 int main(int argc, char **argv) {
     bool debugMode = false;

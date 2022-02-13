@@ -1,4 +1,4 @@
-#include "inc/CMD_Args.h"
+#include "inc/CMD_Args.hpp"
 
 void parseArgs(int argc, char** argv, bool* debugMode) {
     // Check if argument is --debug-mode
