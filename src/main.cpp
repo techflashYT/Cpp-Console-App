@@ -1,11 +1,19 @@
 #include "inc/main.h"
+#include "inc/defines.h"
 
 int main(int argc, char **argv) {
-    // Fool the compiler into thinking I'm using the variables until I find a use for them.
-    (void)argc;
-    (void)argv;
-    #ifdef debugMode
-        // TODO: Do debug mode things
-    #endif
+    bool debugMode = false;
+    if ((argc - 1) >= 1) {
+        parseArgs(argc, argv, &debugMode);
+    }
+    if (debugMode) {
+        printf_s("%s%i arguments passed!\r\n%sThe passed arguments are as follows:\r\n", dbgPrefix, argc - 1, dbgPrefix);
+        for (int i = 1; i <= (argc - 1); i++) {
+            printf_s("%sArgument %i: %s\r\n", dbgPrefix, i, argv[i]);
+        }
+    }
+    else {
+        
+    }
     return 0;
 }
