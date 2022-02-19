@@ -15,7 +15,9 @@ int main(int argc, char **argv) {
 		printf_s("%sInitializing the data directory...\r\n", dbgPrefix);
 	}
 	std::string dataDir = initDataDir();
-	printf_s("%sNameFile (%s) initialized!\r\n", dbgPrefix, dataDir.c_str());
+	if (debugMode) {
+		printf_s("%sNameFile (%s) initialized!\r\n", dbgPrefix, dataDir.c_str());
+	}
 
 	std::string name = checkName(debugMode);
 	std::ifstream nameFile(dataDir);
