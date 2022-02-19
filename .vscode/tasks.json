@@ -32,7 +32,7 @@
 			"label": "RELEASE Build with G++",
 			"command": "C:/msys64/usr/bin/make.exe",
 			"args": [
-				"C:\\Coding\\Test",
+				"release",
 				"-j8"
 			],
 			"presentation": {
@@ -45,7 +45,7 @@
 				"close": true
 			},
 			"options": {
-				"cwd": "C:/msys64/mingw64/bin"
+				"cwd": "C:\\Coding\\Test"
 			},
 			"problemMatcher": [
 				"$gcc"
