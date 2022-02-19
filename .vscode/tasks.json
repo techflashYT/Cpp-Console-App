@@ -1,0 +1,57 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "cppbuild",
+			"label": "DEBUG Build with G++",
+			"command": "C:/msys64/usr/bin/make.exe",
+			"args": [
+				"debug",
+				"-j8"
+			],
+			"presentation": {
+				"echo": true,
+				"reveal": "never",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false,
+				"close": true
+			},
+			"options": {
+				"cwd": "C:\\Coding\\Test"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": "build",
+			"detail": "compiler: C:/msys64/mingw64/bin/g++.exe"
+		},
+		{
+			"type": "cppbuild",
+			"label": "RELEASE Build with G++",
+			"command": "C:/msys64/usr/bin/make.exe",
+			"args": [
+				"C:\\Coding\\Test",
+				"-j8"
+			],
+			"presentation": {
+				"echo": true,
+				"reveal": "never",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false,
+				"close": true
+			},
+			"options": {
+				"cwd": "C:/msys64/mingw64/bin"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": "build",
+			"detail": "compiler: C:/msys64/mingw64/bin/g++.exe"
+		}
+	],
+}
