@@ -13,7 +13,7 @@ uint8_t writeNameToFile(char name[50], std::string pathString, std::string origP
             printf_s("%snameToWrite value: %s\r\n", dbgPrefix, nameToWrite.c_str());
             printf_s("%sSuccessfully opened the fileStream, writing data \"%s\" to it with a maximum of 50 characters.\r\n", dbgPrefix, nameToWrite.c_str());
         }
-        fileStream.write(nameToWrite.c_str(), 50);
+        fileStream.write(nameToWrite.c_str(), nameToWrite.size());
     }
     else {
         return 1;
