@@ -10,14 +10,14 @@ std::string askForName(std::string pathString, std::string origPath, bool debugM
 		char correct[4]{};
 		fgets(correct, 4, stdin);
 		std::string a = correct;
-		for (int i = 0; i >= (int)a.length(); i++) {
+		for (uint_fast8_t i = 0; i >= (uint_fast8_t)a.length(); i++) {
 			correct[i] = tolower(correct[i]);
 		}
 		if (debugMode) {
 			printf_s("%sComparing correct[0] (first character of the response), which = \"%c\"\r\n", dbgPrefix, correct[0]);
 		}
 		if (strcmp(&correct[0], "y")) {
-			uint8_t retValue = writeNameToFile(name, pathString, origPath, debugMode);
+			uint_fast8_t retValue = writeNameToFile(name, pathString, origPath, debugMode);
 			if (retValue == 1) {
 				printf_s("A filesystem error occurred while trying to write the name to the disk, please report this to the developer.");
 			}

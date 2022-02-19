@@ -1,6 +1,6 @@
 #include "inc/writeNameToFile.hpp"
 #include "inc/defines.hpp"
-uint8_t writeNameToFile(char name[50], std::string pathString, std::string origPath, bool debugMode) {
+uint_fast8_t writeNameToFile(char name[50], std::string pathString, std::string origPath, bool debugMode) {
 	pathString = origPath + "\\CONFIG\\NAME";
 	if (debugMode) {
 		printf_s("%sOpening std::ofstream filestream using the path %s\r\n", dbgPrefix, pathString.c_str());
