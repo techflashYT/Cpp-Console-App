@@ -151,7 +151,7 @@ std::string checkName(bool debugMode) {
 		}
 		fileStream.close();
 		if (debugMode) {
-			printf_s("%sFileStream read correctly, returning it's value.\r\n", dbgPrefix);
+			printf_s("%sFileStream read correctly, returning it's value (\"%s\").\r\n", dbgPrefix, buffer.c_str());
 		}
 		return buffer;
 	}
