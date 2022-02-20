@@ -2,7 +2,6 @@
 #include <iostream>
 #include <sys/stat.h>
 #include <fstream>
-#include <sstream>
 #include <filesystem>
 
 using std::ofstream;
