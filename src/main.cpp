@@ -20,9 +20,18 @@ int_fast32_t main(int_fast32_t argc, char **argv) {
 	}
 
 	std::string name = checkName(debugMode);
-	std::string envValue = std::getenv("isThisTheRealTechflash");
+	std::string envValue = "";
 	if (debugMode) {
-		printf_s("%sname variable: %s\r\n%sValue of envValue == \"Yes, it\'s me: %s", dbgPrefix, name.c_str(), dbgPrefix, envValue == "Yes, it's me" ? "true" : "false");
+		printf_s("%sname variable: %s\r\n", dbgPrefix, name.c_str());
+	}
+	if (std::getenv("isThisTheRealTechflash") != NULL) {
+		envValue = std::getenv("isThisTheRealTechflash");
+	}
+	else {
+		envValue = "Doesn\'t exist";
+	}
+	if (debugMode) {
+		printf_s("%sValue of envValue == \"Yes, it\'s me\": %s, value of envValue itself: %s\r\n", dbgPrefix, envValue == "Yes, it's me" ? "true" : "false", envValue.c_str());
 	}
 	if (name == "Techflash" && envValue != "Yes, it's me") {
 		printf_s("Wow!  Nice job trying to impersonate me.\r\nYou won't get anything from this.\r\nYou'll scower the program trying to find out what good this has accomplished you,\r\nonly to find, that the answer is NONE.\r\n");
