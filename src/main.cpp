@@ -34,7 +34,7 @@ int_fast32_t main(int_fast32_t argc, char **argv) {
 		printf_s("%sValue of envValue == \"Yes, it\'s me\": %s, value of envValue itself: %s\r\n", dbgPrefix, envValue == "Yes, it's me" ? "true" : "false", envValue.c_str());
 	}
 	if (name == "Techflash" && envValue != "Yes, it's me") {
-		printf_s("Wow!  Nice job trying to impersonate me.\r\nYou won't get anything from this.\r\nYou'll scower the program trying to find out what good this has accomplished you,\r\nonly to find, that the answer is NONE.\r\n");
+		printf_s("Wow.  Nice job trying to impersonate me.\r\nYou won't get anything from this.\r\nYou'll scower the program trying to find out what good this has accomplished you,\r\nonly to find, that the answer is NONE.\r\n");
 	}
 	else {
 		printf_s("Welcome to the program, %s!\r\n", name.c_str());
