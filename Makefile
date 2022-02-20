@@ -28,10 +28,10 @@ export OUTPUT	:= bin/$(TARGET)
 #=========================================================================================
 # Compile.
 #=========================================================================================
-release:
-	@pwsh -C "if (Test-Path -Path bin) {} else { mkdir bin }"
+release windows:
+	@powershell -Command "if (Test-Path -Path bin) {} else { mkdir bin }"
 	$(CPPC) $(CFLAGS_G) $(CFLAGS_REL) src/*.cpp -o "$(OUTPUT)"
 
 debug:
-	@pwsh -C "if (Test-Path -Path bin) {} else { mkdir bin }"
+	@powershell -Command "if (Test-Path -Path bin) {} else { mkdir bin }"
 	$(CPPC) $(CFLAGS_G) $(CFLAGS_DEB) src/*.cpp -o "$(OUTPUT)"
