@@ -2,7 +2,7 @@
 # Set basic stuff up.
 #=========================================================================================
 NAME			:= test
-TARGET			:= $(notdir $(NAME).exe)
+TARGET			:= $(notdir $(NAME))
 
 #=========================================================================================
 # Set up C++ Compiler and flags.
@@ -28,10 +28,21 @@ export OUTPUT	:= bin/$(TARGET)
 #=========================================================================================
 # Compile.
 #=========================================================================================
-release windows:
+release:
+ifeq ($(PLATFORM),WIN)
 	@powershell -Command "if (Test-Path -Path bin) {} else { mkdir bin }"
-	$(CPPC) $(CFLAGS_G) $(CFLAGS_REL) src/*.cpp -o "$(OUTPUT)"
+	$(CPPC) $(CFLAGS_G) $(CFLAGS_REL) src/*.cpp -o "$(OUTPUT).exe"
+endif
+ifeq ($(PLATFORM),LINUX)
+# TODO: Check for path on linux
+	$(CPPC) $(CFLAGS_G) $(CFLAGS_REL) src/*.cpp -o "$(OUTPUT).out"
+endif
 
 debug:
+ifeq ($(PLATFORM),WIN)
 	@powershell -Command "if (Test-Path -Path bin) {} else { mkdir bin }"
-	$(CPPC) $(CFLAGS_G) $(CFLAGS_DEB) src/*.cpp -o "$(OUTPUT)"
+	$(CPPC) $(CFLAGS_G) $(CFLAGS_DEB) src/*.cpp -o "$(OUTPUT).exe"
+endif
+ifeq ($(PLATFORM),LINUX)
+# TODO: Check for path on linux
+	$(CPPC) $(CFLAGS_G) $(CFLAGS_REL) src/*.cpp -o "$(OUTPUT).out"
