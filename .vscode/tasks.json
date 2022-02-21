@@ -4,6 +4,12 @@
 		{
 			"type": "cppbuild",
 			"label": "DEBUG Build with G++",
+			"options": {
+				"cwd": "C:\\Coding\\Test",
+				"env": {
+					"PLATFORM": "WIN"
+				},
+			},
 			"command": "C:/msys64/usr/bin/make.exe",
 			"args": [
 				"debug",
@@ -18,9 +24,6 @@
 				"clear": false,
 				"close": true
 			},
-			"options": {
-				"cwd": "C:\\Coding\\Test"
-			},
 			"problemMatcher": [
 				"$gcc"
 			],
@@ -30,6 +33,12 @@
 		{
 			"type": "cppbuild",
 			"label": "RELEASE Build with G++",
+			"options": {
+				"cwd": "C:\\Coding\\Test",
+				"env": {
+					"PLATFORM": "WIN"
+				},
+			},
 			"command": "C:/msys64/usr/bin/make.exe",
 			"args": [
 				"release",
@@ -43,9 +52,6 @@
 				"showReuseMessage": true,
 				"clear": false,
 				"close": true
-			},
-			"options": {
-				"cwd": "C:\\Coding\\Test"
 			},
 			"problemMatcher": [
 				"$gcc"
