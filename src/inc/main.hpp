@@ -5,4 +5,4 @@
 
 void parseArgs(int argc, char** argv, bool* debugMode);
 std::string initDataDir();
-std::string checkName(bool debugMode);
+void checkName(char (*)[50], bool debugMode);

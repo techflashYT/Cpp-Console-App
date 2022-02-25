@@ -108,7 +108,8 @@ std::string initDataDir() {
 }
 
 
-std::string checkName(bool debugMode) {
+void checkName(char (*nameRef)[50], bool debugMode) {
+	(void)nameRef;
 	if (debugMode) {
 		printf_s("%sChecking for namefile...\r\n", dbgPrefix);
 	}
@@ -136,35 +137,41 @@ std::string checkName(bool debugMode) {
 			printf_s("%sNameFile already exists, loading it in.\r\n", dbgPrefix);
 		}
 		ifstream fileStream(path);
-		std::string buffer;
+		char fsbuffer[50]{};
+		char (*buffer)[50]{};
 		if (fileStream.is_open()) {
 			if (debugMode) {
 				printf_s("%sFileStream is open.\r\n", dbgPrefix);
 			}
-			fileStream >> buffer;
+			fileStream >> fsbuffer;
+			buffer = &fsbuffer;
 		}
 		else {
-			return "ERROR: ERROR OPENING NAMEFILE";
+			return;
 		}
 		if (debugMode) {
 			printf_s("%sDone reading, now closing the stream.\r\n", dbgPrefix);
 		}
 		fileStream.close();
 		if (debugMode) {
-			printf_s("%sFileStream read correctly, returning it's value (\"%s\").\r\n", dbgPrefix, buffer.c_str());
+			printf_s("%sFileStream read correctly, returning it's value (\"%s\").\r\n", dbgPrefix, buffer);
 		}
-		return buffer;
+		for (int i = 0; i < (int)strlen(buffer[0]); i++) {
+			nameRef[0][i] = buffer[0][i];
+		}
+		return;
 	}
 	else {
 		// Name doesn't exist yet, so we need to ask for it.
 		if (debugMode) {
 			printf_s("%sChecking for namefile...\r\n", dbgPrefix);
 		}
-		return askForName(pathString, origPath, debugMode);
+		nameRef = (char (*)[50])askForName(pathString, origPath, debugMode);
+		return;
 	}
+	return;
 	// if (ec) { // Optional handling of possible errors. Usage of the same ec object works since fs functions are calling ec.clear() if no errors occur.
 	//     printf_s("An unknown error occurred reading the config directory, the error is:\r\n%s\r\nexiting...", ec.message());
 	//     std::exit(1);
 	// }
-	return "ERROR: GENRIC ERROR";
 }

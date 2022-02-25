@@ -1,7 +1,7 @@
 #include "inc/askForName.hpp"
 #include "inc/defines.hpp"
 char name[50]{};
-std::string askForName(std::string pathString, std::string origPath, bool debugMode) {
+char* askForName(std::string pathString, std::string origPath, bool debugMode) {
 	while (true) {
 		printf_s("What is your name? (Maximum of 50 characters)\r\n");
 		fgets(name, 50, stdin);
@@ -9,8 +9,7 @@ std::string askForName(std::string pathString, std::string origPath, bool debugM
 		printf_s("So your name is \"%s\", correct?\r\n", name);
 		char correct[4]{};
 		fgets(correct, 4, stdin);
-		std::string a = correct;
-		for (uint_fast8_t i = 0; i >= (uint_fast8_t)a.length(); i++) {
+		for (uint_fast8_t i = 0; i >= strlen(correct); i++) {
 			correct[i] = tolower(correct[i]);
 		}
 		if (debugMode) {
