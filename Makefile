@@ -52,12 +52,12 @@ ifeq ($(PLATFORM),WIN)
 endif
 ifeq ($(PLATFORM),LINUX)
 # TODO: Check for path on linux
-	$(CPPC) $(CFLAGS_G) $(CFLAGS_REL) src/*.cpp -o "$(OUTPUT).out"
+	$(CPPC) $(CFLAGS_G) $(CFLAGS_DEB) src/*.cpp -o "$(OUTPUT).out"
 endif
 ifneq ($(PLATFORM),LINUX)
 ifneq ($(PLATFORM),WIN)
 	@echo "Assuming that you're running Windows, as you didn't specify.  If this is wrong, stop now."
 	@powershell -Command "if (Test-Path -Path bin) {} else { mkdir bin }"
-	$(CPPC) $(CFLAGS_G) $(CFLAGS_REL) src/*.cpp -o "$(OUTPUT).exe"
+	$(CPPC) $(CFLAGS_G) $(CFLAGS_DEB) src/*.cpp -o "$(OUTPUT).exe"
 endif
 endif
