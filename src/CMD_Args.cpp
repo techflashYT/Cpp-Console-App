@@ -1,5 +1,16 @@
 #include "inc/CMD_Args.hpp"
 
+/*
+	This is the parseArgs function.
+	It gets called by main( ) if any arguments are passed to the program.
+
+	PARAMS:
+	int argc: The number of arguments passed to the program.
+	char argv[ ][ ] (char **argv): The arguments passed to the program, as an array of char arrays (an array of strings)
+	bool *debugMode: A pointer to the debugMode bool, this is so that it can be modified from within this function, as it checks for the --debug-mode flag.
+
+	RETURNS: void (nothing)
+*/
 void parseArgs(int_fast32_t argc, char** argv, bool* debugMode) {
 	VarsList varsList {
 			"argc",
@@ -25,7 +36,6 @@ void parseArgs(int_fast32_t argc, char** argv, bool* debugMode) {
 		varsList.string3 = "argv[2]";
 		varsList.string3data = argv[2];
 	}
-	// Check if argument is --debug-mode
 	bool alreadyShownMsg = false;
 	for (uint_fast8_t i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "--debug-mode") == 0) {
