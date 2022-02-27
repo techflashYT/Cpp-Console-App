@@ -114,5 +114,6 @@
             "highlightColor": "#3565ff",
             "scope": "workspace",
         }
-    ]
+    ],
+    "commentAnchors.workspace.excludeFiles": "**/{.vscode,.git,build,bin}/**/*"
 }
