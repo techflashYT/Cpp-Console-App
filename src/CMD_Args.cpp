@@ -11,7 +11,7 @@
 
 	RETURNS: void (nothing)
 */
-void parseArgs(int_fast32_t argc, char** argv, bool* debugMode) {
+void parseArgs(int_fast32_t argc, char** argv, bool* debugMode, bool* achievementTestArg) {
 	VarsList varsList {
 			"argc",
 			argc,
@@ -42,7 +42,10 @@ void parseArgs(int_fast32_t argc, char** argv, bool* debugMode) {
 			*debugMode = true;
 		}
 		else if (strcmp(argv[i], "--crash-handler") == 0) {
-			crashDump(varsList, "a", __func__, *debugMode);
+			crashDump(varsList, "The user manually initiated the crash dump.", __func__, *debugMode);
+		}
+		else if (strcmp(argv[i], "--test-achievements") == 0) {
+			*achievementTestArg = true;
 		}
 		else if (strcmp(argv[i], "2>CON") == 0) {
 			if (!alreadyShownMsg) {

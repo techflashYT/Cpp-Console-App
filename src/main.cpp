@@ -13,8 +13,9 @@
 int_fast32_t main(int_fast32_t argc, char **argv) {
 	printf_s("Starting...\r\n");
 	bool debugMode = false;
+	bool achievementTestArg = false;
 	if ((argc - 1) >= 1) {
-		parseArgs(argc, argv, &debugMode);
+		parseArgs(argc, argv, &debugMode, &achievementTestArg);
 	}
 	if (debugMode) {
 		printf_s("%s%i arguments passed!\r\n%sThe passed arguments are as follows:\r\n", dbgPrefix, argc - 1, dbgPrefix);
@@ -30,7 +31,7 @@ int_fast32_t main(int_fast32_t argc, char **argv) {
 	}
 
 	char name[50]{};
-	checkName(&name, debugMode); // FIXME: Why doesn't this work?
+	checkName(&name, debugMode);
 	std::string envValue = "";
 	if (debugMode) {
 		printf_s("%sname variable: %s\r\n", dbgPrefix, name);
@@ -50,6 +51,8 @@ int_fast32_t main(int_fast32_t argc, char **argv) {
 	else {
 		printf_s("Welcome to the program, %s!\r\n", name);
 	}
-	
-	return 0;
+	if (achievementTestArg) {
+		achievements.earn(0, debugMode);
+		return 0;
+	}
 }
