@@ -53,4 +53,3 @@ Would mean that the folowing achievement IDs would be completed:
 ## Timestamp
 
 Next, following those 16 bytes, at offset 0x00000010, there will be a UNIX style timestamp.
-
