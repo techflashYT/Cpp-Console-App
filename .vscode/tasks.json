@@ -5,7 +5,7 @@
 			"type": "cppbuild",
 			"label": "DEBUG Build with G++",
 			"options": {
-				"cwd": "C:\\Coding\\Test",
+				"cwd": "C:\\Coding\\OpenGL App",
 				"env": {
 					"PLATFORM": "WIN"
 				},
@@ -33,7 +33,7 @@
 			"type": "cppbuild",
 			"label": "RELEASE Build with G++",
 			"options": {
-				"cwd": "C:\\Coding\\Test",
+				"cwd": "C:\\Coding\\OpenGL App",
 				"env": {
 					"PLATFORM": "WIN"
 				},
