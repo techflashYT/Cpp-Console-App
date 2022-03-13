@@ -12,7 +12,10 @@ CPPC			:= /c/msys64/mingw64/bin/g++
 else
 CPPC			:= g++
 endif
-CFLAGS_G		:= -fdiagnostics-color=always -Wall -Wextra -Werror -std=c++2b
+CFLAGS_G		:= -Wall -Wextra -Wshadow -Werror \
+				   -std=c++2b \
+				   -Lsrc/inc/libs/GL \
+				   -lopengl32 -lglu32 -lfreeglut
 CFLAGS_REL		:= -O3
 CFLAGS_DEB		:= -g
 
