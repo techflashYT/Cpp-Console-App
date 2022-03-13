@@ -115,5 +115,5 @@
             "scope": "workspace",
         }
     ],
-    "commentAnchors.workspace.excludeFiles": "**/{.vscode,.git,build,bin}/**/*"
+    "commentAnchors.workspace.excludeFiles": "**/{.vscode,.git,build,bin,src/inc/GL,src/inc/libs}/**/*"
 }
