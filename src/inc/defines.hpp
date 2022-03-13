@@ -1,31 +1,91 @@
 #pragma once
 
-#define dbgPrefix "DEBUG: "
+
+#define MAX_NAME_LEN     20
+#define MAX_CHAR_ARR_LEN 85
+
+
+#define TITLESTR "Placeholder Title"
+#define GFX_API "OpenGL"
+
+#include <iostream>
+#ifdef ERROR
+	#undef ERROR
+#endif
+#define DEBUG   0
+#define WARNING 1
+#define ERROR   2
+#define FATAL   3
 struct VarsList {
-	std::string int1;
+	char int1[MAX_NAME_LEN]{};
 	int int1data;
 
-	std::string int2;
+	char int2[MAX_NAME_LEN]{};
 	int int2data;
 
-	std::string int3;
+	char int3[MAX_NAME_LEN]{};
 	int int3data;
 	
-	std::string string1;
+	
+	char string1[MAX_NAME_LEN]{};
 	std::string string1data;
 
-	std::string string2;
+	char string2[MAX_NAME_LEN]{};
 	std::string string2data;
 
-	std::string string3;
+	char string3[MAX_NAME_LEN]{};
 	std::string string3data;
+	
+	
+	char charArr1[MAX_NAME_LEN]{};
+	char charArr1data[MAX_CHAR_ARR_LEN]{};
 
-	std::string bool1;
-	bool bool1data;
+	char charArr2[MAX_NAME_LEN]{};
+	char charArr2data[MAX_CHAR_ARR_LEN]{};
 
-	std::string bool2;
-	bool bool2data;
+	char charArr3[MAX_NAME_LEN]{};
+	char charArr3data[MAX_CHAR_ARR_LEN]{};
 
-	std::string bool3;
-	bool bool3data;
+
+	char bool1[MAX_NAME_LEN]{};
+	bool bool1data = false;
+
+	char bool2[MAX_NAME_LEN]{};
+	bool bool2data = false;
+
+	char bool3[MAX_NAME_LEN]{};
+	bool bool3data = false;
 };
+struct __logLevel {
+	bool loggingLevel = 1; // Default of warning
+	const char *strings[4] = {
+		{"DEBUG: "},
+		{"WARNING: "},
+		{"ERROR: "},
+		{"FATAL ERROR: "}
+	};
+	bool operator==(uint_fast8_t id) {
+		return loggingLevel == id;
+	}
+	bool operator>=(uint_fast8_t id) {
+		return loggingLevel >= id;
+	}
+	bool operator<=(uint_fast8_t id) {
+		return loggingLevel <= id;
+	}
+	void operator=(uint_fast8_t id) {
+		loggingLevel = id;
+	}
+	const char *operator[](uint_fast8_t id) {
+		if (id <= 3) {
+			return strings[id];
+		}
+		else {
+			
+			std::string err = "FATAL ERROR: Invalid ID " + std::to_string(id) +
+			" for logLevel";
+			
+			throw std::invalid_argument(err.c_str());
+		}
+	}
+} extern logLevel;

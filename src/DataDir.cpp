@@ -1,5 +1,5 @@
-#include "inc/DataDir.hpp"
 #include "inc/defines.hpp"
+#include "inc/DataDir.hpp"
 bool MAIN_DIR_GOOD = false;
 bool CONFIG_DIR_GOOD = false;
 struct stat b;
@@ -10,7 +10,6 @@ std::error_code ec;
 
 std::string initDataDir() {
 	std::string username;
-#ifdef _WIN32
 	pathString = "C:\\Temp";
 	if (stat(pathString.c_str(), &b) != 0) {
 		system("mkdir C:\\Temp");
@@ -43,7 +42,6 @@ std::string initDataDir() {
 		system(cmd.c_str());
 	}
 	pathString = origPath;
-#endif
 
 	path = pathString; // Constructing the path from a string is possible.
 	if (is_directory(path, ec)) {
@@ -51,19 +49,11 @@ std::string initDataDir() {
 	}
 	if (is_regular_file(path, ec)) {
 		printf_s("The data directory is a file!  Deleting it...\r\n");
-#ifdef _WIN32
 		std::string cmd = "del \"" + pathString + "\"";
 		system(cmd.c_str());
 		printf_s("Done!  Please restart the program!\r\n");
 		system("pause");
 		std::exit(0);
-#else
-		string cmd = "rm \"" + pathString + "\"";
-		system(cmd.c_str());
-		cout << "Done!  Please restart the program!\r\nPress any key to continue...";
-		system("read -n1 key");
-		std::exit(0);
-#endif
 	}
 	if (ec) { // Optional handling of possible errors. Usage of the same ec object works since fs functions are calling ec.clear() if no errors occur.
 		printf_s("An unknown error occurred reading the data directory, the error is:\r\n%s\r\nexiting...", ec.message());
@@ -76,19 +66,11 @@ std::string initDataDir() {
 	}
 	if (is_regular_file(path, ec)) {
 		printf_s("The config directory is a file!  Deleting it...\r\n");
-#ifdef _WIN32
 		std::string cmd = "del \"" + pathString + "\"";
 		system(cmd.c_str());
 		printf_s("Done!  Please restart the program!\r\n");
 		system("pause");
 		std::exit(0);
-#else
-		std::string cmd = "rm \"" + pathString + "\"";
-		system(cmd.c_str());
-		printf_s("Done!  Please restart the program!\r\nPress any key to continue...");
-		system("read -n1 key");
-		std::exit(0);
-#endif
 	}
 	if (ec) { // Optional handling of possible errors. Usage of the same ec object works since fs functions are calling ec.clear() if no errors occur.
 		printf_s("An unknown error occurred reading the config directory, the error is:\r\n%s\r\nexiting...", ec.message());
@@ -96,52 +78,45 @@ std::string initDataDir() {
 	}
 
 	if (MAIN_DIR_GOOD && CONFIG_DIR_GOOD) {
-		if (!MAIN_DIR_GOOD) {
-			return "ERROR: FAILED INIT MAIN DIR";
-		}
-		else if (MAIN_DIR_GOOD && CONFIG_DIR_GOOD) {
-			pathString = origPath + "\\CONFIG\\NAME";
-			return pathString;
-		}
+		pathString = origPath + "\\CONFIG\\NAME";
+		return pathString;
+	}
+	else if (!MAIN_DIR_GOOD) {
+		return "ERROR: FAILED INIT MAIN DIR";
+	}
+	else if (!CONFIG_DIR_GOOD) {
+		return "ERROR: FAILED INIT CONFIG DIR";
 	}
 	return "ERROR: GENERIC FAIL";
 }
 
 
-void checkName(char (*nameRef)[50], bool debugMode) {
+void checkName(char (*nameRef)[50]) {
 	(void)nameRef;
-	if (debugMode) {
-		printf_s("%sChecking for namefile...\r\n", dbgPrefix);
+	if (logLevel == DEBUG) {
+		printf_s("%sChecking for namefile...\r\n", logLevel[DEBUG]);
 	}
 	pathString = origPath + "\\CONFIG\\NAME";
 	path = pathString; // Constructing the path from a string is possible.
 	if (is_directory(path, ec)) {
 		printf_s("A file in the config directory is a folder!  Deleting it...\r\n");
-#ifdef _WIN32
 		std::string cmd = "del \"" + pathString + "\"";
 		system(cmd.c_str());
 		printf_s("Done!  Please restart the program!\r\n");
 		system("pause");
 		std::exit(0);
-#else
-		std::string cmd = "rm \"" + pathString + "\"";
-		system(cmd.c_str());
-		printf_s("Done!  Please restart the program!\r\nPress any key to continue...");
-		system("read -n1 key");
-		std::exit(0);
-#endif
 	}
 	else if (is_regular_file(path, ec)) {
 		// It is a file, so read in the name.
-		if (debugMode) {
-			printf_s("%sNameFile already exists, loading it in.\r\n", dbgPrefix);
+		if (logLevel == DEBUG) {
+			printf_s("%sNameFile already exists, loading it in.\r\n", logLevel[DEBUG]);
 		}
 		ifstream fileStream(path);
 		char fsbuffer[50]{};
 		char (*buffer)[50]{};
 		if (fileStream.is_open()) {
-			if (debugMode) {
-				printf_s("%sFileStream is open.\r\n", dbgPrefix);
+			if (logLevel == DEBUG) {
+				printf_s("%sFileStream is open.\r\n", logLevel[DEBUG]);
 			}
 			fileStream >> fsbuffer;
 			buffer = &fsbuffer;
@@ -149,12 +124,12 @@ void checkName(char (*nameRef)[50], bool debugMode) {
 		else {
 			return;
 		}
-		if (debugMode) {
-			printf_s("%sDone reading, now closing the stream.\r\n", dbgPrefix);
+		if (logLevel == DEBUG) {
+			printf_s("%sDone reading, now closing the stream.\r\n", logLevel[DEBUG]);
 		}
 		fileStream.close();
-		if (debugMode) {
-			printf_s("%sFileStream read correctly, returning it's value (\"%s\").\r\n", dbgPrefix, buffer);
+		if (logLevel == DEBUG) {
+			printf_s("%sFileStream read correctly, returning it's value (\"%s\").\r\n", logLevel[DEBUG], buffer);
 		}
 		for (int i = 0; i < (int)strlen(buffer[0]); i++) {
 			nameRef[0][i] = buffer[0][i];
@@ -163,15 +138,13 @@ void checkName(char (*nameRef)[50], bool debugMode) {
 	}
 	else {
 		// Name doesn't exist yet, so we need to ask for it.
-		if (debugMode) {
-			printf_s("%sChecking for namefile...\r\n", dbgPrefix);
+		if (logLevel == DEBUG) {
+			printf_s("%sChecking for namefile...\r\n", logLevel[DEBUG]);
 		}
-		nameRef = (char (*)[50])askForName(pathString, origPath, debugMode);
+		if (nameRef != (char (*)[50])"" && nameRef != NULL) {
+			nameRef = (char (*)[50])askForName(pathString, origPath);
+		}
 		return;
 	}
 	return;
-	// if (ec) { // Optional handling of possible errors. Usage of the same ec object works since fs functions are calling ec.clear() if no errors occur.
-	//     printf_s("An unknown error occurred reading the config directory, the error is:\r\n%s\r\nexiting...", ec.message());
-	//     std::exit(1);
-	// }
 }

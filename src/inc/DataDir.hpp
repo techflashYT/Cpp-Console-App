@@ -7,4 +7,4 @@
 using std::ofstream;
 using std::ifstream;
 
-char* askForName(std::string pathString, std::string origPath, bool debugMode);
+char* askForName(const std::string &pathString, const std::string &origPath);

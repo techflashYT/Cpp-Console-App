@@ -1,4 +1,6 @@
+#pragma once
 #include <iostream>
+#include <cstring>
 #include <cstdint>
 #include <sstream>
 #include "defines.hpp"
@@ -30,33 +32,35 @@ struct Achievements {
 	} strings;
 	Achievement* getAchievementByID(uint_fast8_t id) {
 		// Check if ID is bigger than MAX_ACHIEVEMENTS.
-		if (id > MAX_ACHIEVEMENTS) {
+		if (id < MAX_ACHIEVEMENTS) {
+			strcpy_s(achievement.name, achievementList.name[id]);
+			strcpy_s(achievement.description, achievementList.description[id]);
+			achievement.rank = *achievementList.rank;
+			achievement.dateEarned = *achievementList.dateEarned;
+			achievement.isCollected = *achievementList.isCollected;
+			return &achievement;
+		}
+		else {
 			std::stringstream errStream;
 			errStream << "Invalid achievement ID (" << id << ") was referenced, please report this to the developer.";
 			char err[90];
 			errStream >> err;
 			throw std::invalid_argument(err);
 		}
-		strcpy_s(achievement.name, achievementList.name[id]);
-		strcpy_s(achievement.description, achievementList.description[id]);
-		achievement.rank = *achievementList.rank;
-		achievement.dateEarned = *achievementList.dateEarned;
-		achievement.isCollected = *achievementList.isCollected;
-		return &achievement;
 	}
-	uint_fast8_t earn(uint_fast8_t id, bool debugMode) {
+	uint_fast8_t earn(uint_fast8_t id) {
 		uint_fast8_t rank = getAchievementByID(id)->rank;
 		getAchievementByID(id)->isCollected = true;
 		if (rank == 0) {
 			try {
-				if (debugMode) {
+				if (logLevel == DEBUG) {
 					printf_s("%sAchievement Details:\r\n%sName: %s\r\n%sDescription: %s\r\n%sRank: %u\r\n%sDate Earned: %u\r\n%sCollected: %s\r\n",
-					dbgPrefix,
-					dbgPrefix, getAchievementByID(id)->name,
-					dbgPrefix, getAchievementByID(id)->description,
-					dbgPrefix, getAchievementByID(id)->rank,
-					dbgPrefix, getAchievementByID(id)->dateEarned,
-					dbgPrefix, getAchievementByID(id)->isCollected ? "true" : "false");
+					logLevel[DEBUG],
+					logLevel[DEBUG], getAchievementByID(id)->name,
+					logLevel[DEBUG], getAchievementByID(id)->description,
+					logLevel[DEBUG], getAchievementByID(id)->rank,
+					logLevel[DEBUG], getAchievementByID(id)->dateEarned,
+					logLevel[DEBUG], getAchievementByID(id)->isCollected ? "true" : "false");
 				}
 				printf_s("%s\"%s\"!\r\n", strings.gotAchievementNormal, getAchievementByID(id)->name);
 			}
