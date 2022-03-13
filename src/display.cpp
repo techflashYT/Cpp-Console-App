@@ -1,5 +1,7 @@
 #include "inc/defines.hpp"
 #include "inc/display.hpp"
+#include "inc/model.hpp"
+Model model;
 uint_fast32_t fps = 60;
 uint_fast32_t screenW = 0;
 uint_fast32_t screenH = 0;
@@ -31,16 +33,11 @@ void display() {
 some things might not look right.", logLevel[WARNING], screenW, screenH);
 	}
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
-	
-	glBegin(GL_QUADS);              // Each set of 4 vertices form a quad
-		glColor3f(1.0f, 0.0f, 0.0f); // Red
-		glVertex2f(-0.5f, -0.5f);    // x, y
-		glVertex2f( 0.5f, -0.5f);
-		glVertex2f( 0.5f,  0.5f);
-		glVertex2f(-0.5f,  0.5f);
-	glEnd();
-	
-	glFlush();
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glLoadIdentity();
+	glTranslatef(0.0f, -30.0f, -500.0f);
+    glRotatef(30.0f, 1.0f, -1.0f, 0.0f);
+    model.draw();
+    glutSwapBuffers();
 	return;
 }

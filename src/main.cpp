@@ -1,14 +1,41 @@
 #include "inc/main.hpp"
 __logLevel logLevel;
 #include "inc/defines.hpp"
+#include "inc/model.hpp"
+extern Model model;
 extern uint_fast32_t fps;
 int_fast32_t main(int_fast32_t argc, char** argv) {
+#ifdef _WIN32
+	system("cls");
+#else
+	system("clear");
+#endif
 	bool achievementTestArg = false;
 	checkArgs(argc, argv, &achievementTestArg);
+	std::string dataDir = initDataDir();
+	if (logLevel == DEBUG) {
+		fprintf_s(stdout, "%sdataDir: %s\r\n", logLevel[DEBUG], dataDir.c_str());
+	}
+	model.load("assets/models/player.obj");
+	// Get the current resolution
+	RECT desktop;
+	const HWND hDesktop = GetDesktopWindow(); // Get a handle to the desktop window
+	GetWindowRect(hDesktop, &desktop); // Get the size of screen to the variable desktop
+	
+	glutInit(&argc, argv);
+	glutInitWindowSize(640, 640);
+	initGLVars();
+	std::string title = (std::string)TITLESTR + "  |  " + GFX_API + "  |  " + "FPS: " + std::to_string(fps);
+	glutCreateWindow(title.c_str());
+	/* This is wasteful, I know, but it's the only easy way to make it work,
+	as the `glutDisplayFunc` function only allows you to pass in a single
+	function as an argument, and not any additional arguments to be passed
+	to it. */
+	setUpDisplayVars(desktop.right, desktop.bottom);
+	glutDisplayFunc(display);
 	if (logLevel == DEBUG) {
 		printf_s("%sInitialized GLUT.\r\n", logLevel[DEBUG]);
 	}
-	std::string dataDir = initDataDir();
 	if (logLevel == DEBUG) {
 		printf_s("%sNameFile (%s) initialized!\r\n", logLevel[DEBUG], dataDir.c_str());
 	}
@@ -42,21 +69,6 @@ only to find, that the answer is NONE.\r\n");
 		return 0;
 	}
 	
-	// Get the current resolution
-	RECT desktop;
-	const HWND hDesktop = GetDesktopWindow(); // Get a handle to the desktop window
-	GetWindowRect(hDesktop, &desktop); // Get the size of screen to the variable desktop
-	
-	glutInit(&argc, argv);
-	glutInitWindowSize(640, 640);
-	std::string title = (std::string)TITLESTR + "  |  " + GFX_API + "  |  " + "FPS: " + std::to_string(fps);
-	glutCreateWindow(title.c_str());
-	// This is wasteful, I know, but it's the only easy way to make it work,
-	// as the `glutDisplayFunc` function only allows you to pass in a single
-	// function as an argument, and not any additional arguments to be passed
-	// to it.
-	setUpDisplayVars(desktop.right, desktop.bottom);
-	glutDisplayFunc(display);
 	glutMainLoop();
 	return 0;
 }

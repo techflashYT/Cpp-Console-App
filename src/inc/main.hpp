@@ -3,6 +3,9 @@
 #include <iostream>
 #include <future>
 #include <vector>
+#include <chrono>
+#include <thread>
+
 #include "achievements.hpp"
 extern "C" {
 	#include "GL/glut.h"
@@ -18,3 +21,4 @@ void setUpDisplayVars(uint_fast32_t desktopRight, uint_fast32_t desktopBottom);
 
 
 std::vector<std::future<void>> futures;
+void initGLVars();
